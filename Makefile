@@ -6,19 +6,17 @@
 #    By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/15 15:03:29 by ebeiline          #+#    #+#              #
-#    Updated: 2021/11/17 15:22:08 by ebeiline         ###   ########.fr        #
+#    Updated: 2022/01/08 17:29:20 by ebeiline         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -g
 
-RM			= rm -f
+CFLAGS		= -Wall -Wextra -Werror 
 
 NAME		= push_swap
-LIB_PATH	= ./libft
 
-LIBRARY		= libft.a
+LIBFT		= libft
 
 MAKE		= make
 
@@ -28,24 +26,21 @@ SRC			= pushswap.c radix.c normalize.c delegate_sort.c sort_small.c \
 
 OBJ			= ${SRC:.c=.o}
 
+INCLUDES	= libft/libft.a
+
 all:		$(NAME)
 
-$(LIBRARY):
-			$(MAKE) -C $(LIB_PATH) bonus
 
-$(NAME):	$(OBJ) $(LIBRARY)
-			$(CC) -I $(CFLAGS) -o $(NAME) $(OBJ) -L $(LIB_PATH) -lft
-
-push:		$(OBJ)
-			$(CC) -I $ $(CFLAGS) -o $(NAME) $(OBJ) -L $(LIB_PATH) -lft
+$(NAME):
+		@make -C $(LIBFT)
+		$(CC) $(SRC) -o $(NAME) $(CFLAGS) $(INCLUDES)
 
 clean:		
-			$(RM) $(OBJ)
+		@make -C libft/ clean
+		$(RM) $(OBJ)
 
 fclean:		clean
-			cd libft && make fclean
-			$(RM) $(NAME)
+			/bin/rm -f $(NAME)
+			@make -C libft/ fclean
 
 re:			fclean all
-
-.PHONY: all clean fclean re push $(LIBRARY)
