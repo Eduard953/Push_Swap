@@ -6,13 +6,13 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 14:06:08 by ebeiline          #+#    #+#             */
-/*   Updated: 2022/01/06 13:47:41 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:51:10 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-static void	check_if_valid_int(int argc, char **argv)
+static void	check_int(int argc, char **argv)
 {
 	int		i;
 
@@ -23,14 +23,19 @@ static void	check_if_valid_int(int argc, char **argv)
 	{	
 		if (!(ft_atoi(argv[i])) && argv[i][0] != '0')
 		{
-			ft_putstr_fd("Error\n", 2);
+			write(1, "Error\n", 7);
+			exit (-1);
+		}
+		if (ft_atol(argv[i]) > 2147483647 || ft_atol(argv[i]) < -2147483648)
+		{
+			write(1, "Error\n", 7);
 			exit (-1);
 		}
 		i++;
 	}
 }
 
-static void	check_if_digits(int argc, char **argv)
+static void	check_num(int argc, char **argv)
 {
 	int	i;
 	int	j;
@@ -47,7 +52,7 @@ static void	check_if_digits(int argc, char **argv)
 					j++;
 				else
 				{
-					ft_putstr_fd("Error\n", 2);
+					write(1, "Error\n", 7);
 					exit (-1);
 				}
 			}
@@ -57,7 +62,7 @@ static void	check_if_digits(int argc, char **argv)
 	}
 }
 
-static void	check_for_duplicates(int argc, char **argv)
+static void	check_dup(int argc, char **argv)
 {
 	int	i;
 	int	j;
@@ -70,7 +75,7 @@ static void	check_for_duplicates(int argc, char **argv)
 		{
 			if (ft_atoi(argv[i]) == ft_atoi(argv[j]))
 			{
-				ft_putstr_fd("Error\n", 2);
+				write(1, "Error\n", 7);
 				exit (-1);
 			}
 			j++;
@@ -79,7 +84,7 @@ static void	check_for_duplicates(int argc, char **argv)
 	}
 }
 
-static void	check_if_sorted(int argc, char **argv)
+static void	check_sorted(int argc, char **argv)
 {
 	int	i;
 
@@ -87,15 +92,13 @@ static void	check_if_sorted(int argc, char **argv)
 	while (i < argc - 1 && ft_atoi(argv[i]) < ft_atoi(argv[i + 1]))
 		i++;
 	if (i == argc - 1)
-	{
 		exit (-1);
-	}
 }
 
 void	check_input(int argc, char **argv)
 {
-	check_if_sorted(argc, argv);
-	check_for_duplicates(argc, argv);
-	check_if_digits(argc, argv);
-	check_if_valid_int(argc, argv);
+	check_num(argc, argv);
+	check_int(argc, argv);
+	check_dup(argc, argv);
+	check_sorted(argc, argv);
 }

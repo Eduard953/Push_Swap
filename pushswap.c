@@ -6,12 +6,11 @@
 /*   By: ebeiline <ebeiline@42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 14:22:33 by ebeiline          #+#    #+#             */
-/*   Updated: 2021/11/17 16:32:39 by ebeiline         ###   ########.fr       */
+/*   Updated: 2022/02/17 16:25:40 by ebeiline         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
-#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
@@ -33,6 +32,10 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	ft_delegate(&a, &b, &commands, i);
+	ft_lstclear(&a, free);
+	ft_lstclear(&b, free);
+	free(norm);
 	ft_lstprint(commands);
+	free_lst(commands);
 	return (0);
 }
